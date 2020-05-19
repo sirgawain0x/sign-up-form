@@ -15,9 +15,10 @@ They build apps for doctors.
 
 ## 4. Coding Exercise
 
-isMatchingBrackets.js
+See isMatchingBrackets.js
 
 ## 5. Coding Excerise
+Build this project from the SRC folder by following the steps below:
 
 ## Installation
 
