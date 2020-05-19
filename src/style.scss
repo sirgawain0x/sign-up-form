@@ -1,0 +1,54 @@
+$max-width: 100%;
+
+#app {
+  @include outer-container;
+  text-align: center;
+}
+
+.people-list, .person-add {
+	@include span-columns(6);
+}
+
+.people-list {
+	.search {
+		@include fill-parent;
+		@include padding(30px 0 30px);
+	
+		.search_input {
+			@include fill-parent;
+		}
+	}
+	.list {
+    list-style-type: none;
+    margin: 0 0 10px;
+    padding: 0;
+    
+    li {
+      margin: 0 0 30px;
+      text-align: left;
+    }
+  }
+}
+
+.person-add {
+	.add-form {
+		.form-field {
+			@include margin(10px 0);
+			@include display(inline-block);
+			@include fill-parent;
+			
+			label {
+				text-align: left;
+				@include span-columns(4);
+			}
+			
+			input {
+				@include span-columns(8);
+			}
+		}
+		button {
+			@include span-columns(8);
+			@include shift(4);
+		}
+	}
+}

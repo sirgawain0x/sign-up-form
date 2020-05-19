@@ -1,0 +1,214 @@
+
+let people = [
+  {firstName: "John", lastName: "Doe", npiNumber: 50, address: "4384  Chandler Drive", city: "Jacksonville", naState: "Florida", zipCode: "32256", phone: "333 8983029", email: "swagger8302@gmail.com"},
+  {firstName: "Alice", lastName: "Smith", npiNumber: 22, address: "348 E 200th N", city: "Jacksonville", naState: "Florida", zipCode: "32256", phone: "333 8983029", email: "swagger8302@gmail.com"},
+  {firstName: "Mark", lastName: "Joseph", npiNumber: 45, address: "12132 SW 18th St", city: "Jacksonville", naState: "Florida", zipCode: "32256", phone: "333 8983029", email: "swagger8302@gmail.com"},
+  {firstName: "Marion", lastName: "Justin", npiNumber: 45, address: "10150 Bellbrook Rd", city: "Jacksonville", naState: "Florida", zipCode: "32256", phone: "333 8983029", email: "swagger8302@gmail.com"}
+];
+
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      people: people
+    }
+  }
+
+  addPerson = (person) => {
+    let people = this.state.people;
+
+    people.push(person);
+
+    this.setState({
+      people: people
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Sign Up Book</h1>
+        <PeopleList people={this.state.people} />
+        <AddPerson people={this.state.people} addPerson={this.addPerson} />
+      </div>
+    )
+  }
+}
+
+class PeopleList extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      search: ''
+    }
+  }
+	
+	updateSearch = (event) => {
+    this.setState({
+      search: event.target.value
+    })
+  }
+
+  render() {
+    let filteredPeople = this.props.people.filter(
+      (person) => {
+        var fullName = person.firstName.toLowerCase() + person.lastName.toLowerCase()
+        return fullName.indexOf(
+          this.state.search.toLowerCase()) !== -1;
+      }
+    );
+
+    return (
+      <div className="people-list">
+			 <div className="search">
+				<input type="text" 
+					className="search_input"
+					value={this.state.search}
+					onChange={this.updateSearch}
+					placeholder="Search Name"
+			  />
+			 </div>
+        <ul className="list">
+          {filteredPeople.map((person)=> {
+            return <Person person={person} />
+          })}
+			 </ul>
+      </div>
+
+    )
+  }
+}
+
+class Person extends React.Component {
+  render() {
+    return (
+      <li>
+        <p>
+          {this.props.person.firstName} <br />
+          {this.props.person.lastName} <br />
+          {this.props.person.npiNumber} <br />
+          {this.props.person.address} <br />
+          {this.props.person.city} <br />
+          {this.props.person.naState} <br />
+          {this.props.person.zipCode} <br />
+          {this.props.person.phone} <br />
+          {this.props.person.email} <br />
+        </p>
+      </li>
+    )
+  }
+}
+
+class AddPerson extends React.Component {
+
+  componentWillMount() {
+    this.setState({
+      firstName: "",
+      lastName: "",
+      npiNumber: "",
+      address: "",
+      city: "",
+      naState: "",
+      zipCode: "",
+      phone: "",
+      email: ""
+    });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.addPerson(this.state)
+  }
+
+  handleChange = (data) => {
+    let state = this.state;
+    let name = data.target.name;
+    state[name] = data.target.value;
+    this.setState(state);
+  }
+
+  render() {
+
+    return (
+		 <div className="person-add">
+			<form className="add-form" onSubmit={this.handleSubmit}>
+				<div className="form-field">
+					<label>Name: </label>
+					<input type="text"
+					 name="firstName"
+					 value={this.props.firstname}
+					 onChange={this.handleChange}
+					/>
+				</div>
+				<div className="form-field">
+					<label>Lastname: </label>
+					<input type="text"
+					 name="lastName"
+					 value={this.props.lastname}
+					 onChange={this.handleChange}
+					/>
+				</div>
+        <div className="form-field">
+					<label>NPI Number: </label>
+					<input type="number"
+					 name="npiNumber"
+					 value={this.props.npiNumber}
+					 onChange={this.handleChange}
+					/>
+				</div>
+        <div className="form-field">
+					<label>Business Address: </label>
+					<input type="text"
+					 name="address"
+					 value={this.props.address}
+					 onChange={this.handleChange}
+					/>
+				</div>
+        <div className="form-field">
+					<label>City: </label>
+					<input type="text"
+					 name="city"
+					 value={this.props.city}
+					 onChange={this.handleChange}
+					/>
+				</div>
+        <div className="form-field">
+					<label>State: </label>
+					<input type="text"
+					 name="naState"
+					 value={this.props.naState}
+					 onChange={this.handleChange}
+					/>
+				</div>
+        <div className="form-field">
+					<label>ZipCode: </label>
+					<input type="number"
+					 name="zipCode"
+					 value={this.props.zipCode}
+					 onChange={this.handleChange}
+					/>
+				</div>
+				<div className="form-field">
+					<label>Phone: </label>
+					<input type="tel"
+					 name="phone"
+					 value={this.props.phone}
+					 onChange={this.handleChange}
+					/>
+				</div>
+        <div className="form-field">
+					<label>Email Address: </label>
+					<input type="text"
+					 name="email"
+					 value={this.props.email}
+					 onChange={this.handleChange}
+					/>
+				</div>
+			  <button type="submit">Add</button>
+			</form>
+		</div>
+    )
+  }
+}
+
+React.render(<App people={people} />, document.getElementById('app'));
